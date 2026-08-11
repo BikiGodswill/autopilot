@@ -1,0 +1,10 @@
+import ComingSoon from "@/components/dashboard/ComingSoon";
+
+export default function ReportsPage() {
+  return (
+    <ComingSoon
+      title="Reports"
+      description="Generate and download professional SEO reports."
+    />
+  );
+}

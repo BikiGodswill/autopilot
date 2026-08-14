@@ -15,6 +15,7 @@ export default function SignupPage() {
   const [errors, setErrors] = useState({});
   const [submitError, setSubmitError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
 
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));
@@ -38,7 +39,7 @@ export default function SignupPage() {
     if (!validate()) return;
 
     setLoading(true);
-    const { error } = await signUpWithPassword({
+    const { data, error } = await signUpWithPassword({
       name: form.name,
       email: form.email,
       password: form.password,
@@ -49,7 +50,25 @@ export default function SignupPage() {
       setSubmitError(error.message);
       return;
     }
-    router.push("/login?created=1");
+
+    // If email confirmation is required, Supabase returns no session yet —
+    // send them to login instead of a protected onboarding route they
+    // can't access until they confirm.
+    if (data.session) {
+      router.push("/onboarding");
+    } else {
+      setNeedsConfirmation(true);
+    }
+  }
+
+  if (needsConfirmation) {
+    return (
+      <AuthCard title="Check your email" subtitle="Confirm your address to finish creating your account.">
+        <Link href="/login" className="text-sm font-medium text-ink hover:underline">
+          Back to login
+        </Link>
+      </AuthCard>
+    );
   }
 
   return (

@@ -1,10 +1,5 @@
-import ComingSoon from "@/components/dashboard/ComingSoon";
+import ContentGenerator from "@/components/dashboard/ContentGenerator";
 
 export default function ContentPage() {
-  return (
-    <ComingSoon
-      title="AI Content"
-      description="Generate, edit, and publish SEO-optimized content."
-    />
-  );
+  return <ContentGenerator />;
 }

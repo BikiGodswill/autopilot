@@ -1,10 +1,5 @@
-import ComingSoon from "@/components/dashboard/ComingSoon";
+import IntegrationsPanel from "@/components/dashboard/IntegrationsPanel";
 
 export default function IntegrationsPage() {
-  return (
-    <ComingSoon
-      title="Integrations"
-      description="Connect GitHub or WordPress to apply fixes automatically."
-    />
-  );
+  return <IntegrationsPanel />;
 }

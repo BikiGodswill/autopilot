@@ -28,12 +28,7 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <Button
-            href="/login"
-            variant="ghost"
-            size="sm"
-            className="hover:bg-ink hover:text-white border border-ink"
-          >
+          <Button href="/login" variant="ghost" size="sm">
             Log in
           </Button>
           <Button href="/signup" variant="primary" size="sm">
@@ -65,20 +60,10 @@ export default function Navbar() {
             ))}
           </nav>
           <div className="mt-4 flex flex-col gap-2">
-            <Button
-              href="/login"
-              variant="outline"
-              size="md"
-              className="w-full"
-            >
+            <Button href="/login" variant="outline" size="md" className="w-full">
               Log in
             </Button>
-            <Button
-              href="/signup"
-              variant="primary"
-              size="md"
-              className="w-full"
-            >
+            <Button href="/signup" variant="primary" size="md" className="w-full">
               Start Free
             </Button>
           </div>

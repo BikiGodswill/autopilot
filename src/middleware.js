@@ -1,10 +1,18 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse } from "next/server";
+import { assertRequiredEnv } from "@/lib/env";
 
-const PROTECTED_PREFIXES = ["/dashboard"];
+const PROTECTED_PREFIXES = ["/dashboard", "/onboarding"];
 const AUTH_PREFIXES = ["/login", "/signup"];
 
 export async function middleware(request) {
+  try {
+    assertRequiredEnv();
+  } catch (err) {
+    console.error("[middleware] environment misconfigured:", err.message);
+    return new NextResponse("Server misconfigured — check environment variables.", { status: 500 });
+  }
+
   let response = NextResponse.next({ request });
 
   const supabase = createServerClient(

@@ -17,7 +17,7 @@ export default function Hero() {
 
         <p className="animate-fadeUp mt-5 max-w-xl text-balance text-base leading-relaxed text-ash-500 [animation-delay:160ms] [animation-fill-mode:backwards] md:text-lg">
           Analyze your website, fix technical SEO issues, create high-ranking
-          content, and continuously improve your search visibility
+          content, and continuously improve your search visibility with AI.
         </p>
 
         <div className="animate-fadeUp mt-10 flex justify-center [animation-delay:240ms] [animation-fill-mode:backwards]">

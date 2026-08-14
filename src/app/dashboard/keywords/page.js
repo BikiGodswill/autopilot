@@ -1,10 +1,5 @@
-import ComingSoon from "@/components/dashboard/ComingSoon";
+import KeywordsManager from "@/components/dashboard/KeywordsManager";
 
 export default function KeywordsPage() {
-  return (
-    <ComingSoon
-      title="Keywords"
-      description="Track rankings and discover keyword opportunities."
-    />
-  );
+  return <KeywordsManager />;
 }

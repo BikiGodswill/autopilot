@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { assertRequiredEnv } from "@/lib/env";
 
 /**
  * Supabase client for Server Components, Route Handlers, and Server Actions.
@@ -7,6 +8,7 @@ import { cookies } from "next/headers";
  * on the server exactly as they do in the browser.
  */
 export async function createClient() {
+  assertRequiredEnv();
   const cookieStore = await cookies();
 
   return createServerClient(

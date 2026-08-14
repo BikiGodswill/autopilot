@@ -35,19 +35,14 @@ const ICONS = {
 function NavLink({ item }) {
   const pathname = usePathname();
   const Icon = ICONS[item.icon];
-  const active =
-    item.href === "/dashboard"
-      ? pathname === item.href
-      : pathname.startsWith(item.href);
+  const active = item.href === "/dashboard" ? pathname === item.href : pathname.startsWith(item.href);
 
   return (
     <Link
       href={item.href}
       className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
-        active
-          ? "bg-ash-100 text-ink"
-          : "text-ash-500 hover:bg-ash-50 hover:text-ink"
-      } border border-transparent hover:border-ash-200`}
+        active ? "bg-ash-100 text-ink" : "text-ash-500 hover:bg-ash-50 hover:text-ink"
+      }`}
     >
       <Icon size={18} />
       {item.label}
@@ -75,7 +70,7 @@ export default function Sidebar({ open, onClose }) {
           <Logo />
         </div>
 
-        <nav className="flex-1 space-y-3 overflow-y-auto px-3">
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3">
           {DASHBOARD_NAV.map((item) => (
             <NavLink key={item.href} item={item} />
           ))}

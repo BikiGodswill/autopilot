@@ -3,6 +3,7 @@ export const PLANS = {
     id: "free",
     name: "Free",
     price: 0,
+    priceXAF: 0,
     limits: { websites: 1, monthlyAudits: 3, aiWords: 2000, trackedKeywords: 10, teamMembers: 1 },
     features: [
       "1 website",
@@ -15,6 +16,10 @@ export const PLANS = {
     id: "starter",
     name: "Starter",
     price: 29,
+    // XAF prices are the amounts actually charged via Fapshi (Mobile
+    // Money / Orange Money only settle in XAF). Placeholder figures —
+    // adjust to your actual pricing before going live.
+    priceXAF: 15000,
     limits: { websites: 1, monthlyAudits: 15, aiWords: 20000, trackedKeywords: 50, teamMembers: 1 },
     features: [
       "Multiple audits",
@@ -28,6 +33,7 @@ export const PLANS = {
     id: "professional",
     name: "Professional",
     price: 79,
+    priceXAF: 45000,
     limits: { websites: 5, monthlyAudits: 60, aiWords: 100000, trackedKeywords: 250, teamMembers: 3 },
     features: [
       "Multiple websites",
@@ -43,6 +49,7 @@ export const PLANS = {
     id: "agency",
     name: "Agency",
     price: 199,
+    priceXAF: 120000,
     limits: { websites: 25, monthlyAudits: 300, aiWords: 500000, trackedKeywords: 1000, teamMembers: 10 },
     features: [
       "Multiple clients",

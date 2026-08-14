@@ -1,10 +1,5 @@
-import ComingSoon from "@/components/dashboard/ComingSoon";
+import RecommendationsList from "@/components/dashboard/RecommendationsList";
 
 export default function RecommendationsPage() {
-  return (
-    <ComingSoon
-      title="Recommendations"
-      description="Prioritized, AI-generated fixes for every detected issue."
-    />
-  );
+  return <RecommendationsList />;
 }

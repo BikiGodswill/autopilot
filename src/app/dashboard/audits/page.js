@@ -1,10 +1,5 @@
-import ComingSoon from "@/components/dashboard/ComingSoon";
+import AuditsOverview from "@/components/dashboard/AuditsOverview";
 
 export default function AuditsPage() {
-  return (
-    <ComingSoon
-      title="SEO Audits"
-      description="Run and review full-site technical, on-page, and content audits."
-    />
-  );
+  return <AuditsOverview />;
 }

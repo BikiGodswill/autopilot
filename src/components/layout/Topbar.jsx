@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { HiOutlineMenu, HiOutlineBell, HiOutlineLogout } from "react-icons/hi";
+import { HiOutlineMenu, HiOutlineLogout } from "react-icons/hi";
 import { signOut } from "@/lib/auth/authActions";
+import NotificationsPanel from "@/components/layout/NotificationsPanel";
 
 export default function Topbar({ onMenuClick, userEmail }) {
   const router = useRouter();
@@ -26,9 +27,7 @@ export default function Topbar({ onMenuClick, userEmail }) {
       <div className="hidden lg:block" />
 
       <div className="flex items-center gap-3">
-        <button className="rounded-lg p-2 text-ash-500 hover:bg-ash-100 hover:text-ink" aria-label="Notifications">
-          <HiOutlineBell size={19} />
-        </button>
+        <NotificationsPanel />
         {userEmail ? (
           <span className="hidden text-sm text-ash-500 sm:inline">{userEmail}</span>
         ) : null}

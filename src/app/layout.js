@@ -29,10 +29,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}
-    >
+    <html lang="en" className={`${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`}>
       <body>{children}</body>
     </html>
   );

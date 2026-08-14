@@ -20,23 +20,28 @@ and Supabase.
   website analyzer backed by demo data), features, pricing, about,
   contact, resources, privacy, terms — all linked from nav/footer.
 - **Auth** — signup, login, forgot-password, reset-password, all wired
-  to Supabase Auth. Middleware protects `/dashboard/*` and redirects
-  logged-in users away from `/login` and `/signup`.
+  to Supabase Auth. Middleware protects `/dashboard/*` and `/onboarding`,
+  and redirects logged-in users away from `/login` and `/signup`.
+- **Onboarding** — post-signup wizard (`/onboarding`): website URL →
+  business type → goals → live first-audit scan.
 - **Database** — full schema with 18 tables and Row Level Security in
   `supabase/migrations/0001_init.sql`, plus an auto-profile-creation
   trigger on signup.
-- **API routes** — every endpoint from the spec's routing table:
-  `/api/websites` (list/create), `/api/websites/[id]` (get/delete),
-  `/api/websites/[id]/audit` (run), `/api/websites/[id]/audits` (history),
-  `/api/websites/[id]/issues`, `/api/content/generate`, `/api/content/optimize`,
-  `/api/keywords`, `/api/recommendations`, `/api/recommendations/[id]/apply`,
-  `/api/monitoring`, `/api/reports` — all auth-gated via `requireUser()`
-  and RLS-scoped.
-- **Dashboard** — sidebar/topbar shell; functional Websites list (add +
-  view) and website detail page (score, run audit, issue list) wired to
-  the API above; remaining sections (content, keywords, recommendations,
-  monitoring, integrations, reports, settings, billing) are "coming soon"
-  stubs, not 404s.
+- **Real SEO crawler + scoring engine** — `src/services/seo/realCrawler.js`
+  fetches a live homepage (via the SSRF-safe `safeFetch`), extracts
+  technical/on-page/content/performance/mobile/accessibility signals,
+  and `scoringEngine.js` turns those into weighted category scores and
+  a real issues list — no more fake numbers behind login. The public
+  marketing analyzer stays on demo data by design (see Security notes).
+- **API routes** — every endpoint from the spec's routing table, all
+  auth-gated via `requireUser()` and RLS-scoped, plus notifications,
+  profile, integrations, and content-drafts routes needed to back the
+  dashboard UI.
+- **Dashboard** — every section is a real, working UI wired to the API
+  above: Websites (add/view + run audit), Content generator (drafts
+  saved to the database), Keywords, Recommendations (apply), Monitoring
+  settings, Integrations (GitHub/WordPress/Manual), Reports, Settings,
+  Billing. The topbar notification bell is live.
 - **Security** — SSRF-safe URL validation (`src/lib/security/urlValidation.js`)
   for anything that will eventually crawl a user-supplied website.
 
@@ -113,19 +118,28 @@ and the database — no separate backend to host.
   It's unused today — reserved for future cron/admin jobs.
 - The website analyzer validates URLs against private IP ranges,
   localhost, and cloud metadata endpoints before use
-  (`src/lib/security/urlValidation.js`). When the real crawler is built
-  (Phase 7), its fetch layer must re-validate the *resolved* IP at
-  request time too, to close the DNS-rebinding gap noted in that file.
+  (`src/lib/security/urlValidation.js`). The real crawler's fetch layer
+  (`src/lib/security/safeFetch.js`) closes the DNS-rebinding gap this
+  file flags: it resolves DNS itself, validates the resolved IP, and
+  pins the TCP connection to that exact address — so a hostname can't
+  validate as safe and then resolve somewhere unsafe between the check
+  and the request. Every redirect hop is re-validated the same way.
+- The real crawler is intentionally kept behind auth + plan limits
+  (`/api/websites/[id]/audit`) and never exposed on the public,
+  unauthenticated marketing analyzer (`/api/analyze`, still demo data) —
+  an anonymous endpoint that server-side fetches arbitrary URLs is an
+  abuse vector on its own even with IP-range validation.
 - All 18 database tables have Row Level Security enabled and scoped to
   `auth.uid()`, either directly or through their parent website/project.
 
 ## Roadmap (not yet built)
 
-Phase 5 onward from the original spec: onboarding flow, dashboard
-overview + website management, the real SEO crawler and scoring engine,
-AI content engine (generation/editor/optimization), keyword research,
-recommendation + auto-fix engine (GitHub/WordPress integrations),
-continuous monitoring jobs, PDF reports, notifications center, billing/
-Stripe integration, and admin architecture.
+The real AI provider (content generation still returns clearly-labeled
+demo output — swap point is `services/ai/aiService.js`), Stripe billing,
+real GitHub/WordPress OAuth for the auto-fix integrations, PDF report
+export, scheduled monitoring cron jobs, multi-page crawling (today's
+crawler audits the homepage only — see the note at the top of
+`realCrawler.js` for how to extend it to follow internal links up to
+`CRAWL_LIMITS.maxPages`), and admin architecture.
 
 Say "continue" or name a phase to keep building.

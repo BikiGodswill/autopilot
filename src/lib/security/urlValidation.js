@@ -43,6 +43,12 @@ function isPrivateIPv6(hostname) {
 
 const ALLOWED_PROTOCOLS = new Set(["http:", "https:"]);
 
+export function isPrivateIP(ip) {
+  if (typeof ip !== "string") return true; // fail closed
+  if (ip.includes(":")) return isPrivateIPv6(ip);
+  return isPrivateIPv4(ip);
+}
+
 /**
  * Validates a user-supplied website URL before it is ever handed to a
  * fetch/crawl job. Returns { valid: true, url: URL } or
